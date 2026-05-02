@@ -28,7 +28,7 @@ const STATS_WRAPPER_CLASS = 'space-y-5 pb-6';
 
 // Brand title at top
 const BRAND_WRAPPER_CLASS = 'text-center pt-2 pb-4';
-const BRAND_TITLE_CLASS = 'text-3xl font-bold tracking-tight';
+const BRAND_TITLE_CLASS = 'text-4xl font-bold tracking-tight';
 
 // Current score (hero section)
 const CURRENT_SCORE_WRAPPER_CLASS = 'text-center py-4';
