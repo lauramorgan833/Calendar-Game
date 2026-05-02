@@ -6,46 +6,56 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Card } from '@/components/ui/card';
 import { GameStats } from '@/hooks/useGameStats';
 import { TrendingUp } from 'lucide-react';
 import ScoreChart from './ScoreChart';
 
 // =============================================================================
-// Module-level constants — no inline strings/numbers in JSX
+// Module-level constants
 // =============================================================================
 
 // Dialog / layout classNames
 const DIALOG_CONTENT_CLASS =
-  'w-full sm:max-w-[440px] max-h-[85vh] p-0 bg-background text-foreground overflow-hidden';
+  'w-full sm:max-w-[400px] max-h-[85vh] p-0 bg-background text-foreground overflow-hidden';
 const DIALOG_HEADER_CLASS = 'p-4 sm:p-6 pb-2';
 const DIALOG_TITLE_CLASS = 'flex items-center gap-2';
 const DIALOG_TITLE_ICON_CLASS = 'h-5 w-5';
 const SCROLL_AREA_CLASS =
   'max-h-[calc(85vh-80px)] px-4 sm:px-6 overflow-y-auto';
-const STATS_WRAPPER_CLASS =
-  'space-y-4 pb-6';
-const STATS_GRID_CLASS = 'grid grid-cols-2 gap-4';
+const STATS_WRAPPER_CLASS = 'space-y-5 pb-6';
 
-// Stat card classNames (theme-aware: uses Card's bg-card token, with explicit
-// dark variant for the colored numeric value so it's readable in dark mode)
-const STAT_CARD_CLASS = 'p-4 text-center';
-const STAT_VALUE_CLASS =
-  'text-xl font-bold text-[#3d7f92] dark:text-[#5d9caa]';
-const STAT_LABEL_CLASS = 'text-xs text-muted-foreground';
+// Current score (hero section)
+const CURRENT_SCORE_WRAPPER_CLASS = 'text-center py-4';
+const CURRENT_SCORE_VALUE_CLASS = 'text-5xl font-bold text-[#3d7f92] dark:text-[#5d9caa]';
+const CURRENT_SCORE_LABEL_CLASS = 'text-sm text-muted-foreground mt-1';
+const CURRENT_SCORE_NONE_CLASS = 'text-3xl font-bold text-muted-foreground';
 
-// Footer / "playing since" classNames
+// Best/Average row
+const SCORE_ROW_CLASS = 'flex justify-center gap-8';
+const SCORE_ITEM_CLASS = 'text-center';
+const SCORE_VALUE_CLASS = 'text-2xl font-bold text-foreground';
+const SCORE_LABEL_CLASS = 'text-xs text-muted-foreground';
+
+// Wordle-style stats row
+const STATS_ROW_CLASS = 'flex justify-between px-2';
+const STAT_ITEM_CLASS = 'text-center flex-1';
+const STAT_VALUE_CLASS = 'text-2xl font-bold text-foreground';
+const STAT_LABEL_CLASS = 'text-xs text-muted-foreground leading-tight';
+
+// Footer
 const FOOTER_WRAPPER_CLASS = 'text-center pt-4 border-t border-border';
 const FOOTER_TEXT_CLASS = 'text-xs text-muted-foreground';
 
 // UI strings
-const PANEL_TITLE = 'Your Statistics';
-const LABEL_GAMES_PLAYED = 'Games Played';
-const LABEL_WIN_RATE = 'Win Rate';
+const PANEL_TITLE = 'Statistics';
+const LABEL_TODAYS_SCORE = "Today's Score";
+const LABEL_NOT_PLAYED = 'Not played yet';
+const LABEL_BEST = 'Best';
+const LABEL_AVERAGE = 'Avg';
+const LABEL_PLAYED = 'Played';
+const LABEL_WIN_PCT = 'Win %';
 const LABEL_CURRENT_STREAK = 'Current Streak';
 const LABEL_MAX_STREAK = 'Max Streak';
-const LABEL_AVERAGE_SCORE = 'Average Score';
-const LABEL_BEST_SCORE = 'Best Score';
 const EMPTY_VALUE_DASH = '-';
 
 // Defaults
@@ -72,19 +82,78 @@ const StatsPanel: React.FC<StatsPanelProps> = ({ stats, isOpen, onClose }) => {
     DEFAULT_VIEW_MODE
   );
 
-  // Pre-computed conditional flags (no logic in return)
+  // Get today's score from dailyStats
+  const today = new Date().toISOString().split('T')[0];
+  const todayStats = (stats.dailyStats || []).find((d) => d.date === today);
+  const hasPlayedToday = todayStats?.completed || false;
+  const todaysScore = hasPlayedToday ? todayStats?.score : null;
+
+  // Pre-computed conditional flags
   const completedDailyStats = (stats.dailyStats || []).filter((d) => d.completed);
   const hasChartData = completedDailyStats.length > 0;
   const hasAnyDailyStats = (stats.dailyStats || []).length > 0;
   const playingSinceText = hasAnyDailyStats
-    ? `Playing since ${new Date(stats.dailyStats[0].date).toLocaleDateString()} • ${stats.dailyStats.length} days tracked`
+    ? `Playing since ${new Date(stats.dailyStats[0].date).toLocaleDateString()}`
     : '';
 
   // Pre-computed display values
-  const winPercentageText = `${stats.winPercentage}%`;
   const bestScoreText = stats.bestScore || EMPTY_VALUE_DASH;
+  const averageScoreText = stats.averageScore || EMPTY_VALUE_DASH;
 
-  // Pre-built JSX subsections
+  // Current score section (hero)
+  const currentScoreNode = (
+    <div className={CURRENT_SCORE_WRAPPER_CLASS}>
+      {hasPlayedToday ? (
+        <>
+          <div className={CURRENT_SCORE_VALUE_CLASS}>{todaysScore}</div>
+          <div className={CURRENT_SCORE_LABEL_CLASS}>{LABEL_TODAYS_SCORE}</div>
+        </>
+      ) : (
+        <>
+          <div className={CURRENT_SCORE_NONE_CLASS}>{EMPTY_VALUE_DASH}</div>
+          <div className={CURRENT_SCORE_LABEL_CLASS}>{LABEL_NOT_PLAYED}</div>
+        </>
+      )}
+    </div>
+  );
+
+  // Best & Average row
+  const scoreRowNode = (
+    <div className={SCORE_ROW_CLASS}>
+      <div className={SCORE_ITEM_CLASS}>
+        <div className={SCORE_VALUE_CLASS}>{bestScoreText}</div>
+        <div className={SCORE_LABEL_CLASS}>{LABEL_BEST}</div>
+      </div>
+      <div className={SCORE_ITEM_CLASS}>
+        <div className={SCORE_VALUE_CLASS}>{averageScoreText}</div>
+        <div className={SCORE_LABEL_CLASS}>{LABEL_AVERAGE}</div>
+      </div>
+    </div>
+  );
+
+  // Wordle-style stats row (Played, Win%, Current Streak, Max Streak)
+  const statsRowNode = (
+    <div className={STATS_ROW_CLASS}>
+      <div className={STAT_ITEM_CLASS}>
+        <div className={STAT_VALUE_CLASS}>{stats.gamesPlayed}</div>
+        <div className={STAT_LABEL_CLASS}>{LABEL_PLAYED}</div>
+      </div>
+      <div className={STAT_ITEM_CLASS}>
+        <div className={STAT_VALUE_CLASS}>{stats.winPercentage}</div>
+        <div className={STAT_LABEL_CLASS}>{LABEL_WIN_PCT}</div>
+      </div>
+      <div className={STAT_ITEM_CLASS}>
+        <div className={STAT_VALUE_CLASS}>{stats.currentStreak}</div>
+        <div className={STAT_LABEL_CLASS}>{LABEL_CURRENT_STREAK}</div>
+      </div>
+      <div className={STAT_ITEM_CLASS}>
+        <div className={STAT_VALUE_CLASS}>{stats.maxStreak}</div>
+        <div className={STAT_LABEL_CLASS}>{LABEL_MAX_STREAK}</div>
+      </div>
+    </div>
+  );
+
+  // Chart section
   const chartNode = hasChartData ? (
     <ScoreChart
       dailyStats={stats.dailyStats}
@@ -95,6 +164,7 @@ const StatsPanel: React.FC<StatsPanelProps> = ({ stats, isOpen, onClose }) => {
     />
   ) : null;
 
+  // Footer
   const footerNode = hasAnyDailyStats ? (
     <div className={FOOTER_WRAPPER_CLASS}>
       <div className={FOOTER_TEXT_CLASS}>{playingSinceText}</div>
@@ -113,42 +183,9 @@ const StatsPanel: React.FC<StatsPanelProps> = ({ stats, isOpen, onClose }) => {
 
         <ScrollArea className={SCROLL_AREA_CLASS}>
           <div className={STATS_WRAPPER_CLASS}>
-            {/* Main stats grid - 2x2 */}
-            <div className={STATS_GRID_CLASS}>
-              <Card className={STAT_CARD_CLASS}>
-                <div className={STAT_VALUE_CLASS}>{stats.gamesPlayed}</div>
-                <div className={STAT_LABEL_CLASS}>{LABEL_GAMES_PLAYED}</div>
-              </Card>
-
-              <Card className={STAT_CARD_CLASS}>
-                <div className={STAT_VALUE_CLASS}>{winPercentageText}</div>
-                <div className={STAT_LABEL_CLASS}>{LABEL_WIN_RATE}</div>
-              </Card>
-
-              <Card className={STAT_CARD_CLASS}>
-                <div className={STAT_VALUE_CLASS}>{stats.currentStreak}</div>
-                <div className={STAT_LABEL_CLASS}>{LABEL_CURRENT_STREAK}</div>
-              </Card>
-
-              <Card className={STAT_CARD_CLASS}>
-                <div className={STAT_VALUE_CLASS}>{stats.maxStreak}</div>
-                <div className={STAT_LABEL_CLASS}>{LABEL_MAX_STREAK}</div>
-              </Card>
-            </div>
-
-            {/* Performance metrics */}
-            <div className={STATS_GRID_CLASS}>
-              <Card className={STAT_CARD_CLASS}>
-                <div className={STAT_VALUE_CLASS}>{stats.averageScore}</div>
-                <div className={STAT_LABEL_CLASS}>{LABEL_AVERAGE_SCORE}</div>
-              </Card>
-
-              <Card className={STAT_CARD_CLASS}>
-                <div className={STAT_VALUE_CLASS}>{bestScoreText}</div>
-                <div className={STAT_LABEL_CLASS}>{LABEL_BEST_SCORE}</div>
-              </Card>
-            </div>
-
+            {currentScoreNode}
+            {scoreRowNode}
+            {statsRowNode}
             {chartNode}
             {footerNode}
           </div>
