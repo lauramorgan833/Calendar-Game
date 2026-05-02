@@ -190,6 +190,16 @@ const HelpPanel: React.FC<HelpPanelProps> = ({ isOpen, onClose }) => {
     </div>
   );
 
+  const panelContent = (
+    <div className={SCROLL_INNER_CLASS}>
+      {objectiveSection}
+      {howToPlaySection}
+      {scoringSection}
+      {dailySection}
+      {proTipsSection}
+    </div>
+  );
+
   return (
     <PanelDialog
       isOpen={isOpen}
@@ -199,13 +209,7 @@ const HelpPanel: React.FC<HelpPanelProps> = ({ isOpen, onClose }) => {
       icon={HelpCircle}
       className="sm:max-w-[540px]"
     >
-      <div className={SCROLL_INNER_CLASS}>
-        {objectiveSection}
-        {howToPlaySection}
-        {scoringSection}
-        {dailySection}
-        {proTipsSection}
-      </div>
+      {panelContent}
     </PanelDialog>
   );
 };

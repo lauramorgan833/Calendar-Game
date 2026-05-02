@@ -173,6 +173,17 @@ const StatsPanel: React.FC<StatsPanelProps> = ({ stats, isOpen, onClose }) => {
     </div>
   ) : null;
 
+  const panelContent = (
+    <div className={STATS_WRAPPER_CLASS}>
+      {brandTitleNode}
+      {currentScoreNode}
+      {scoreRowNode}
+      {statsRowNode}
+      {chartNode}
+      {footerNode}
+    </div>
+  );
+
   return (
     <PanelDialog
       isOpen={isOpen}
@@ -180,14 +191,7 @@ const StatsPanel: React.FC<StatsPanelProps> = ({ stats, isOpen, onClose }) => {
       title={PANEL_TITLE}
       icon={TrendingUp}
     >
-      <div className={STATS_WRAPPER_CLASS}>
-        {brandTitleNode}
-        {currentScoreNode}
-        {scoreRowNode}
-        {statsRowNode}
-        {chartNode}
-        {footerNode}
-      </div>
+      {panelContent}
     </PanelDialog>
   );
 };
