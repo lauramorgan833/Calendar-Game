@@ -31,7 +31,7 @@ const STATS_GRID_CLASS = 'grid grid-cols-2 gap-4';
 // dark variant for the colored numeric value so it's readable in dark mode)
 const STAT_CARD_CLASS = 'p-4 text-center';
 const STAT_VALUE_CLASS =
-  'text-xl font-bold text-blue-600 dark:text-blue-400';
+  'text-xl font-bold text-[#3d7f92] dark:text-[#5d9caa]';
 const STAT_LABEL_CLASS = 'text-xs text-muted-foreground';
 
 // Footer / "playing since" classNames

@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { BarChart3, Settings, HelpCircle, Menu } from 'lucide-react';
 import Logo from './Logo';
 import { useTheme } from '@/contexts/theme-provider';
-import { APP_COLORS, PUZZLE_COLORS } from '@/lib/colors';
+import { APP_COLORS } from '@/lib/colors';
 
 // Theme constants
 const THEME_DARK = 'dark';
@@ -53,12 +53,8 @@ const Header: React.FC<HeaderProps> = ({
   // Pre-compute style objects so the return statement has no inline logic
   const headerStyle = { backgroundColor: headerBgColor };
 
-  const titleGradient = `linear-gradient(to right, ${PUZZLE_COLORS.blue[600]}, ${PUZZLE_COLORS.purple[600]})`;
   const titleStyle = {
-    background: titleGradient,
-    WebkitBackgroundClip: 'text' as const,
-    WebkitTextFillColor: 'transparent' as const,
-    backgroundClip: 'text' as const,
+    color: APP_COLORS.primary.main,
   };
 
   return (
