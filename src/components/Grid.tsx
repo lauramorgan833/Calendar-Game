@@ -13,8 +13,8 @@ const DEAD_CELL_MARKER = 'dead';
 const EMPTY_CELL_CONTENT = '';
 
 // Grid container styling constants
-const GRID_CONTAINER_CLASSNAME = 'inline-block rounded-xl overflow-hidden shadow-sm';
-const GRID_INNER_CLASSNAME = 'grid grid-cols-7 gap-0 w-[280px] sm:w-[336px] md:w-[448px] bg-card';
+const GRID_CONTAINER_CLASSNAME = 'inline-block';
+const GRID_INNER_CLASSNAME = 'grid grid-cols-7 gap-0 w-[280px] sm:w-[336px] md:w-[448px]';
 
 // Props interface for the calendar grid component
 interface GridProps {
