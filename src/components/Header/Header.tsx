@@ -2,24 +2,20 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { BarChart3, Settings, HelpCircle, Menu } from 'lucide-react';
 import Logo from './Logo';
-import { useTheme } from '@/contexts/theme-provider';
 import { APP_COLORS } from '@/lib/colors';
-
-// Theme constants
-const THEME_DARK = 'dark';
 
 // Icon size class shared by all header buttons
 const HEADER_ICON_CLASSNAME = 'h-5 w-5';
 
 // Layout className constants
-const HEADER_CLASSNAME = 'shadow-sm border-b border-border';
-const HEADER_INNER_CLASSNAME = 'container mx-auto px-4 py-2';
+const HEADER_CLASSNAME = 'border-b border-border/50';
+const HEADER_INNER_CLASSNAME = 'container mx-auto px-4 py-3';
 const HEADER_ROW_CLASSNAME = 'flex items-center justify-between';
 const LEFT_GROUP_CLASSNAME = 'flex items-center gap-2 md:gap-4';
 const MENU_BUTTON_CLASSNAME = 'md:hidden';
 const LOGO_GROUP_CLASSNAME = 'flex items-center gap-2 md:gap-3';
-const TITLE_CLASSNAME = 'text-2xl md:text-3xl font-bold tracking-tight';
-const RIGHT_GROUP_CLASSNAME = 'flex items-center gap-1 md:gap-2';
+const TITLE_CLASSNAME = 'text-xl md:text-2xl font-semibold tracking-tight';
+const RIGHT_GROUP_CLASSNAME = 'flex items-center gap-0.5 md:gap-1';
 
 // App branding constants
 const APP_TITLE_CALEN = 'Calen';
@@ -43,17 +39,6 @@ const Header: React.FC<HeaderProps> = ({
   onHelpClick,
   onMenuClick
 }) => {
-  const { theme } = useTheme();
-
-  // Determine header background color based on theme
-  const isDarkTheme = theme === THEME_DARK;
-  const headerBgColor = isDarkTheme
-    ? APP_COLORS.background.dark.header
-    : APP_COLORS.background.light.header;
-
-  // Pre-compute style objects so the return statement has no inline logic
-  const headerStyle = { backgroundColor: headerBgColor };
-
   const titleStyleCalen = {
     color: APP_COLORS.primary.main,
     fontFamily: "'Outfit', sans-serif",
@@ -65,7 +50,7 @@ const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header style={headerStyle} className={HEADER_CLASSNAME}>
+    <header className={HEADER_CLASSNAME}>
       <div className={HEADER_INNER_CLASSNAME}>
         <div className={HEADER_ROW_CLASSNAME}>
           {/* Left side: Mobile menu and app title */}

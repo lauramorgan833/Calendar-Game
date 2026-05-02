@@ -28,17 +28,17 @@ export const APP_COLORS = {
     secondary: 'hsl(var(--secondary))',
     // Light mode specific
     light: {
-      header: '#f3f4f6',
+      header: '#fafafa',
       panel: '#ffffff',
-      grid: '#ffffff',
-      section: '#f9fafb'
+      grid: '#fafafa',
+      section: '#f5f5f5'
     },
     // Dark mode specific  
     dark: {
-      header: '#1f2937',
-      panel: '#1f2937',
-      grid: '#374151',
-      section: '#111827'
+      header: '#121212',
+      panel: '#1a1a1a',
+      grid: '#262626',
+      section: '#0d0d0d'
     }
   },
 
@@ -63,8 +63,8 @@ export const APP_COLORS = {
     input: 'hsl(var(--input))',
     ring: 'hsl(var(--ring))',
     // Grid border colors for light/dark themes
-    light: '#000000',
-    dark: '#ffffff',
+    light: '#d1d5db',
+    dark: '#4b5563',
     // Semantic borders
     success: '#16a34a',
     warning: '#f59e0b',
