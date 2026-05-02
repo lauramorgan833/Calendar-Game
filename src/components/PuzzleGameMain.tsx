@@ -91,10 +91,10 @@ const WIN_MESSAGE_CLASS = 'text-green-600 dark:text-green-400 font-bold text-cen
 const RESET_ROW_CLASS = 'flex gap-2 mb-1 md:mb-4';
 const RESET_BUTTON_CLASS = 'hover:bg-gray-300 dark:hover:bg-gray-700 text-xs md:text-sm !transition-none';
 
-const CONTENT_CLASS = 'flex-1 flex flex-col lg:flex-row p-1 md:p-4 gap-1 md:gap-4 min-h-0 max-h-full overflow-hidden lg:max-w-6xl lg:mx-auto';
-const GRID_COL_CLASS = `w-full ${GRID_CONTAINER_LG_WIDTH} flex-shrink-0 mb-1 md:mb-0`;
-const GRID_CENTER_CLASS = 'w-full h-full flex items-center justify-center';
-const SHAPES_COL_CLASS = 'flex-1 lg:w-1/2 min-h-0 max-h-full';
+const CONTENT_CLASS = 'flex-1 flex flex-col lg:flex-row p-1 md:p-4 gap-4 md:gap-8 min-h-0 max-h-full overflow-hidden items-center justify-center lg:max-w-5xl lg:mx-auto';
+const GRID_COL_CLASS = 'flex-shrink-0 mb-1 md:mb-0 flex items-center justify-center';
+const GRID_CENTER_CLASS = 'flex items-center justify-center';
+const SHAPES_COL_CLASS = 'flex-1 min-h-0 max-h-full flex items-start justify-center lg:max-w-md';
 
 // Theme key
 const THEME_DARK = 'dark';
