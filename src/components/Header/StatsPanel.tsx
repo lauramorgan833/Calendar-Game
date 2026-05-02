@@ -41,7 +41,7 @@ const SCORE_LABEL_CLASS = 'text-xs text-muted-foreground';
 const STATS_ROW_CLASS = 'flex justify-between px-2';
 const STAT_ITEM_CLASS = 'text-center flex-1';
 const STAT_VALUE_CLASS = 'text-2xl font-bold text-foreground';
-const STAT_LABEL_CLASS = 'text-xs text-muted-foreground leading-tight';
+const STAT_LABEL_CLASS = 'text-xs text-muted-foreground leading-tight whitespace-pre-line';
 
 // Footer
 const FOOTER_WRAPPER_CLASS = 'text-center pt-4 border-t border-border';
@@ -51,12 +51,12 @@ const FOOTER_TEXT_CLASS = 'text-xs text-muted-foreground';
 const PANEL_TITLE = 'Statistics';
 const LABEL_TODAYS_SCORE = "Today's Score";
 const LABEL_NOT_PLAYED = 'Not played yet';
-const LABEL_BEST = 'Best';
-const LABEL_AVERAGE = 'Avg';
+const LABEL_BEST = 'Best Score';
+const LABEL_AVERAGE = 'Average Score';
 const LABEL_PLAYED = 'Played';
 const LABEL_WIN_PCT = 'Win %';
-const LABEL_CURRENT_STREAK = 'Current Streak';
-const LABEL_MAX_STREAK = 'Max Streak';
+const LABEL_CURRENT_STREAK = 'Current\nStreak';
+const LABEL_MAX_STREAK = 'Max\nStreak';
 const EMPTY_VALUE_DASH = '-';
 
 // Defaults
