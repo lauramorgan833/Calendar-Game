@@ -6,6 +6,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Card } from '@/components/ui/card';
 import { GameStats } from '@/hooks/useGameStats';
 import { TrendingUp } from 'lucide-react';
 import ScoreChart from './ScoreChart';
@@ -31,9 +32,9 @@ const CURRENT_SCORE_LABEL_CLASS = 'text-sm text-muted-foreground mt-1';
 const CURRENT_SCORE_NONE_CLASS = 'text-3xl font-bold text-muted-foreground';
 
 // Best/Average row
-const SCORE_ROW_CLASS = 'flex justify-center gap-8';
-const SCORE_ITEM_CLASS = 'text-center';
-const SCORE_VALUE_CLASS = 'text-2xl font-bold text-foreground';
+const SCORE_ROW_CLASS = 'grid grid-cols-2 gap-3';
+const SCORE_CARD_CLASS = 'p-4 text-center';
+const SCORE_VALUE_CLASS = 'text-xl font-bold text-[#3d7f92] dark:text-[#5d9caa]';
 const SCORE_LABEL_CLASS = 'text-xs text-muted-foreground';
 
 // Wordle-style stats row
@@ -120,14 +121,14 @@ const StatsPanel: React.FC<StatsPanelProps> = ({ stats, isOpen, onClose }) => {
   // Best & Average row
   const scoreRowNode = (
     <div className={SCORE_ROW_CLASS}>
-      <div className={SCORE_ITEM_CLASS}>
+      <Card className={SCORE_CARD_CLASS}>
         <div className={SCORE_VALUE_CLASS}>{bestScoreText}</div>
         <div className={SCORE_LABEL_CLASS}>{LABEL_BEST}</div>
-      </div>
-      <div className={SCORE_ITEM_CLASS}>
+      </Card>
+      <Card className={SCORE_CARD_CLASS}>
         <div className={SCORE_VALUE_CLASS}>{averageScoreText}</div>
         <div className={SCORE_LABEL_CLASS}>{LABEL_AVERAGE}</div>
-      </div>
+      </Card>
     </div>
   );
 
