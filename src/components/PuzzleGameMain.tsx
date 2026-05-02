@@ -651,7 +651,7 @@ const PuzzleGame: React.FC<PuzzleGameProps> = ({ onGameComplete }) => {
 
   // Pre-computed conditional flags / sections
   const showWinMessage = gameWon;
-  const showResetControls = !gameWon;
+  const showResetControls = true; // Always show for testing - was: !gameWon
   const showTouchPreview = Boolean(
     touchDragState.isDragging && touchDragState.pieceId && touchDragState.currentPos
   );
