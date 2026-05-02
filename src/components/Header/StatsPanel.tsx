@@ -18,12 +18,12 @@ import { APP_COLORS } from '@/lib/colors';
 
 // Dialog / layout classNames
 const DIALOG_CONTENT_CLASS =
-  'w-full sm:max-w-[400px] max-h-[85vh] p-0 bg-background text-foreground overflow-hidden';
-const DIALOG_HEADER_CLASS = 'p-4 sm:p-6 pb-2';
+  'w-full sm:max-w-[480px] max-h-[85vh] p-0 bg-background text-foreground overflow-hidden';
+const DIALOG_HEADER_CLASS = 'p-4 sm:p-8 pb-2';
 const DIALOG_TITLE_CLASS = 'flex items-center gap-2';
 const DIALOG_TITLE_ICON_CLASS = 'h-5 w-5';
 const SCROLL_AREA_CLASS =
-  'max-h-[calc(85vh-80px)] px-4 sm:px-6 overflow-y-auto';
+  'max-h-[calc(85vh-80px)] px-6 sm:px-10 overflow-y-auto';
 const STATS_WRAPPER_CLASS = 'space-y-5 pb-6';
 
 // Brand title at top
