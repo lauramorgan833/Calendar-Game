@@ -82,9 +82,9 @@ const PRO_TIPS_BULLETS: string[] = [
 // className constants (light + dark variants pre-defined)
 // =============================================================================
 const DIALOG_CONTENT_CLASS =
-  'w-full sm:max-w-[540px] max-h-[85vh] p-0 bg-background text-foreground overflow-hidden';
-const DIALOG_HEADER_CLASS = 'p-4 sm:p-6 pb-2';
-const SCROLL_AREA_CLASS = 'max-h-[calc(85vh-100px)] px-4 sm:px-6 overflow-y-auto';
+  'w-full sm:max-w-[480px] max-h-[85vh] p-0 bg-background text-foreground overflow-hidden';
+const DIALOG_HEADER_CLASS = 'p-4 sm:p-8 pb-2';
+const SCROLL_AREA_CLASS = 'max-h-[calc(85vh-100px)] px-6 sm:px-10 overflow-y-auto';
 const SCROLL_INNER_CLASS = 'space-y-6 pb-6';
 
 // Standard info section card (used by Objective, How to Play, Scoring, Daily)

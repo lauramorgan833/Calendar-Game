@@ -35,12 +35,12 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose, onClearD
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="w-full sm:max-w-[400px] max-h-[85vh] p-0 bg-background text-foreground overflow-hidden">
-        <DialogHeader className="p-4 sm:p-6 pb-2">
+      <DialogContent className="w-full sm:max-w-[480px] max-h-[85vh] p-0 bg-background text-foreground overflow-hidden">
+        <DialogHeader className="p-4 sm:p-8 pb-2">
           <DialogTitle>Settings</DialogTitle>
         </DialogHeader>
         
-        <ScrollArea className="max-h-[calc(85vh-80px)] px-4 sm:px-6 overflow-y-auto">
+        <ScrollArea className="max-h-[calc(85vh-80px)] px-6 sm:px-10 overflow-y-auto">
           <div className="space-y-6 pb-6">
             {/* Theme settings section */}
             <Card className="p-6">
