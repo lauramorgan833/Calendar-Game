@@ -1,25 +1,15 @@
 import React, { useState } from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Card } from '@/components/ui/card';
 import { GameStats } from '@/hooks/useGameStats';
 import { TrendingUp } from 'lucide-react';
 import ScoreChart from './ScoreChart';
+import { PanelDialog } from './PanelDialog';
 import { APP_COLORS } from '@/lib/colors';
 
 // =============================================================================
 // Module-level constants
 // =============================================================================
 
-// Dialog / layout classNames
-const DIALOG_TITLE_CLASS = 'flex items-center gap-2';
-const DIALOG_TITLE_ICON_CLASS = 'h-5 w-5';
-const SCROLL_AREA_CLASS = 'max-h-[calc(85vh-120px)] overflow-y-auto';
 const STATS_WRAPPER_CLASS = 'space-y-5';
 
 // Brand title at top
@@ -184,27 +174,21 @@ const StatsPanel: React.FC<StatsPanelProps> = ({ stats, isOpen, onClose }) => {
   ) : null;
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle className={DIALOG_TITLE_CLASS}>
-            <TrendingUp className={DIALOG_TITLE_ICON_CLASS} />
-            {PANEL_TITLE}
-          </DialogTitle>
-        </DialogHeader>
-
-        <ScrollArea className={SCROLL_AREA_CLASS}>
-          <div className={STATS_WRAPPER_CLASS}>
-            {brandTitleNode}
-            {currentScoreNode}
-            {scoreRowNode}
-            {statsRowNode}
-            {chartNode}
-            {footerNode}
-          </div>
-        </ScrollArea>
-      </DialogContent>
-    </Dialog>
+    <PanelDialog
+      isOpen={isOpen}
+      onClose={onClose}
+      title={PANEL_TITLE}
+      icon={TrendingUp}
+    >
+      <div className={STATS_WRAPPER_CLASS}>
+        {brandTitleNode}
+        {currentScoreNode}
+        {scoreRowNode}
+        {statsRowNode}
+        {chartNode}
+        {footerNode}
+      </div>
+    </PanelDialog>
   );
 };
 

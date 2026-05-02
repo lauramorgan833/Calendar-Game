@@ -1,17 +1,11 @@
 import React from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { HelpCircle } from 'lucide-react';
+import { PanelDialog } from './PanelDialog';
 
 // Props interface for the HelpPanel component
 interface HelpPanelProps {
-  isOpen: boolean; // Controls panel visibility
-  onClose: () => void; // Callback to close the panel
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 // =============================================================================
@@ -81,7 +75,6 @@ const PRO_TIPS_BULLETS: string[] = [
 // =============================================================================
 // className constants (light + dark variants pre-defined)
 // =============================================================================
-const SCROLL_AREA_CLASS = 'max-h-[calc(85vh-120px)] overflow-y-auto';
 const SCROLL_INNER_CLASS = 'space-y-6';
 
 // Standard info section card (used by Objective, How to Play, Scoring, Daily)
@@ -99,14 +92,14 @@ const STRONG_CLASS = 'text-gray-900 dark:text-gray-100';
 
 // Pro tips highlighted card
 const TIPS_CARD_CLASS =
-  'bg-blue-50 dark:bg-blue-950/40 border border-transparent dark:border-blue-900 p-6 rounded-lg';
+  'bg-[#3d7f92]/10 dark:bg-[#5d9caa]/20 border border-transparent dark:border-[#5d9caa]/30 p-6 rounded-lg';
 const TIPS_HEADING_CLASS =
-  'font-semibold mb-2 text-blue-800 dark:text-blue-300';
+  'font-semibold mb-2 text-[#3d7f92] dark:text-[#5d9caa]';
 const TIPS_LIST_CLASS =
-  'text-sm space-y-1 text-blue-700 dark:text-blue-200';
+  'text-sm space-y-1 text-[#2d5f72] dark:text-[#7dbdcc]';
 
 // =============================================================================
-// Bullet list helper — no logic in JSX, just maps a pre-defined array
+// Bullet list helper
 // =============================================================================
 interface BulletListProps {
   items: string[];
@@ -125,16 +118,8 @@ const BulletList: React.FC<BulletListProps> = ({ items, className = SECTION_LIST
 
 /**
  * Help panel that provides game instructions and tips.
- * Displays comprehensive guide on how to play Calendle.
- * Uses shadcn/ui Sheet component for slide-out panel behavior.
- * Fully supports both light and dark themes via Tailwind dark: variants.
- *
- * @param props - Component props for controlling panel state
  */
 const HelpPanel: React.FC<HelpPanelProps> = ({ isOpen, onClose }) => {
-  // ---------------------------------------------------------------------------
-  // Pre-build all section subtrees as variables (no conditionals in return)
-  // ---------------------------------------------------------------------------
   const objectiveSection = (
     <div className={SECTION_CARD_CLASS}>
       <h3 className={SECTION_HEADING_CLASS}>{OBJECTIVE_HEADING}</h3>
@@ -206,24 +191,22 @@ const HelpPanel: React.FC<HelpPanelProps> = ({ isOpen, onClose }) => {
   );
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[540px]">
-        <DialogHeader>
-          <DialogTitle>{PANEL_TITLE}</DialogTitle>
-          <DialogDescription>{PANEL_DESCRIPTION}</DialogDescription>
-        </DialogHeader>
-
-        <ScrollArea className={SCROLL_AREA_CLASS}>
-          <div className={SCROLL_INNER_CLASS}>
-            {objectiveSection}
-            {howToPlaySection}
-            {scoringSection}
-            {dailySection}
-            {proTipsSection}
-          </div>
-        </ScrollArea>
-      </DialogContent>
-    </Dialog>
+    <PanelDialog
+      isOpen={isOpen}
+      onClose={onClose}
+      title={PANEL_TITLE}
+      description={PANEL_DESCRIPTION}
+      icon={HelpCircle}
+      className="sm:max-w-[540px]"
+    >
+      <div className={SCROLL_INNER_CLASS}>
+        {objectiveSection}
+        {howToPlaySection}
+        {scoringSection}
+        {dailySection}
+        {proTipsSection}
+      </div>
+    </PanelDialog>
   );
 };
 
