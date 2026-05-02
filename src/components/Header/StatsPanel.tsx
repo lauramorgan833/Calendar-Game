@@ -17,14 +17,10 @@ import { APP_COLORS } from '@/lib/colors';
 // =============================================================================
 
 // Dialog / layout classNames
-const DIALOG_CONTENT_CLASS =
-  'w-full sm:max-w-[480px] max-h-[85vh] p-0 bg-background text-foreground overflow-hidden';
-const DIALOG_HEADER_CLASS = 'p-4 sm:p-8 pb-2';
 const DIALOG_TITLE_CLASS = 'flex items-center gap-2';
 const DIALOG_TITLE_ICON_CLASS = 'h-5 w-5';
-const SCROLL_AREA_CLASS =
-  'max-h-[calc(85vh-80px)] px-6 sm:px-10 overflow-y-auto';
-const STATS_WRAPPER_CLASS = 'space-y-5 pb-6';
+const SCROLL_AREA_CLASS = 'max-h-[calc(85vh-120px)] overflow-y-auto';
+const STATS_WRAPPER_CLASS = 'space-y-5';
 
 // Brand title at top
 const BRAND_WRAPPER_CLASS = 'text-center pt-2 pb-4';
@@ -189,8 +185,8 @@ const StatsPanel: React.FC<StatsPanelProps> = ({ stats, isOpen, onClose }) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className={DIALOG_CONTENT_CLASS}>
-        <DialogHeader className={DIALOG_HEADER_CLASS}>
+      <DialogContent>
+        <DialogHeader>
           <DialogTitle className={DIALOG_TITLE_CLASS}>
             <TrendingUp className={DIALOG_TITLE_ICON_CLASS} />
             {PANEL_TITLE}

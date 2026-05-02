@@ -81,11 +81,8 @@ const PRO_TIPS_BULLETS: string[] = [
 // =============================================================================
 // className constants (light + dark variants pre-defined)
 // =============================================================================
-const DIALOG_CONTENT_CLASS =
-  'w-full sm:max-w-[480px] max-h-[85vh] p-0 bg-background text-foreground overflow-hidden';
-const DIALOG_HEADER_CLASS = 'p-4 sm:p-8 pb-2';
-const SCROLL_AREA_CLASS = 'max-h-[calc(85vh-100px)] px-6 sm:px-10 overflow-y-auto';
-const SCROLL_INNER_CLASS = 'space-y-6 pb-6';
+const SCROLL_AREA_CLASS = 'max-h-[calc(85vh-120px)] overflow-y-auto';
+const SCROLL_INNER_CLASS = 'space-y-6';
 
 // Standard info section card (used by Objective, How to Play, Scoring, Daily)
 const SECTION_CARD_CLASS =
@@ -210,8 +207,8 @@ const HelpPanel: React.FC<HelpPanelProps> = ({ isOpen, onClose }) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className={DIALOG_CONTENT_CLASS}>
-        <DialogHeader className={DIALOG_HEADER_CLASS}>
+      <DialogContent>
+        <DialogHeader>
           <DialogTitle>{PANEL_TITLE}</DialogTitle>
           <DialogDescription>{PANEL_DESCRIPTION}</DialogDescription>
         </DialogHeader>
