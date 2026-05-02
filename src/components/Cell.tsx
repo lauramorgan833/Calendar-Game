@@ -139,7 +139,7 @@ const Cell: React.FC<CellProps> = ({
     } else if (isPlacedCell) {
       cellBackgroundColor = pieceColor;
     } else if (highlighted) {
-      cellBackgroundColor = APP_COLORS.cell.highlight;
+      cellBackgroundColor = isLightMode ? APP_COLORS.cell.highlight : APP_COLORS.cell.highlightDark;
     } else {
       cellBackgroundColor = defaultBackgroundColor;
     }

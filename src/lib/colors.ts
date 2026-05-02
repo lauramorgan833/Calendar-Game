@@ -76,6 +76,7 @@ export const APP_COLORS = {
   cell: {
     preview: 'rgba(61, 127, 146, 0.35)',
     highlight: '#f59e0b',
+    highlightDark: '#fbbf24',
     text: {
       light: '#000000',
       dark: '#ffffff'
