@@ -207,7 +207,7 @@ const HelpPanel: React.FC<HelpPanelProps> = ({ isOpen, onClose }) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent>
+      <DialogContent className="sm:max-w-[540px]">
         <DialogHeader>
           <DialogTitle>{PANEL_TITLE}</DialogTitle>
           <DialogDescription>{PANEL_DESCRIPTION}</DialogDescription>
