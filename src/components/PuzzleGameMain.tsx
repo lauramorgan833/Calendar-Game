@@ -91,9 +91,9 @@ const WIN_MESSAGE_CLASS = 'text-green-600 dark:text-green-400 font-bold text-cen
 const RESET_ROW_CLASS = 'flex gap-2 mb-6 md:mb-8';
 const RESET_BUTTON_CLASS = 'hover:bg-gray-300 dark:hover:bg-gray-700 text-xs md:text-sm !transition-none';
 
-const CONTENT_CLASS = 'flex-1 flex flex-col lg:flex-row p-1 md:p-4 gap-4 md:gap-10 min-h-0 max-h-full overflow-hidden items-start justify-center lg:max-w-5xl lg:mx-auto';
-const GRID_COL_CLASS = 'flex-shrink-0 mb-1 md:mb-0 flex items-start justify-center';
-const GRID_CENTER_CLASS = 'flex items-start justify-center';
+const CONTENT_CLASS = 'flex-1 flex flex-col lg:flex-row p-1 md:p-4 gap-4 md:gap-10 min-h-0 max-h-full overflow-hidden items-center lg:items-start justify-center lg:max-w-5xl lg:mx-auto';
+const GRID_COL_CLASS = 'w-full lg:w-auto flex-shrink-0 mb-1 md:mb-0 flex items-center lg:items-start justify-center';
+const GRID_CENTER_CLASS = 'flex items-center lg:items-start justify-center';
 const SHAPES_COL_CLASS = 'flex-1 min-h-0 max-h-full flex items-start justify-center lg:max-w-md';
 
 // Theme key
