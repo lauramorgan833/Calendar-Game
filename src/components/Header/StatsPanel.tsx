@@ -10,6 +10,7 @@ import { Card } from '@/components/ui/card';
 import { GameStats } from '@/hooks/useGameStats';
 import { TrendingUp } from 'lucide-react';
 import ScoreChart from './ScoreChart';
+import { APP_COLORS } from '@/lib/colors';
 
 // =============================================================================
 // Module-level constants
@@ -24,6 +25,10 @@ const DIALOG_TITLE_ICON_CLASS = 'h-5 w-5';
 const SCROLL_AREA_CLASS =
   'max-h-[calc(85vh-80px)] px-4 sm:px-6 overflow-y-auto';
 const STATS_WRAPPER_CLASS = 'space-y-5 pb-6';
+
+// Brand title at top
+const BRAND_WRAPPER_CLASS = 'text-center pt-2 pb-4';
+const BRAND_TITLE_CLASS = 'text-3xl font-bold tracking-tight';
 
 // Current score (hero section)
 const CURRENT_SCORE_WRAPPER_CLASS = 'text-center py-4';
@@ -100,6 +105,16 @@ const StatsPanel: React.FC<StatsPanelProps> = ({ stats, isOpen, onClose }) => {
   // Pre-computed display values
   const bestScoreText = stats.bestScore || EMPTY_VALUE_DASH;
   const averageScoreText = stats.averageScore || EMPTY_VALUE_DASH;
+
+  // Brand title
+  const brandTitleNode = (
+    <div className={BRAND_WRAPPER_CLASS}>
+      <h2 className={BRAND_TITLE_CLASS} style={{ fontFamily: "'Outfit', sans-serif" }}>
+        <span style={{ color: APP_COLORS.primary.main }}>Calen</span>
+        <span style={{ color: APP_COLORS.cell.highlight }}>dle</span>
+      </h2>
+    </div>
+  );
 
   // Current score section (hero)
   const currentScoreNode = (
@@ -184,6 +199,7 @@ const StatsPanel: React.FC<StatsPanelProps> = ({ stats, isOpen, onClose }) => {
 
         <ScrollArea className={SCROLL_AREA_CLASS}>
           <div className={STATS_WRAPPER_CLASS}>
+            {brandTitleNode}
             {currentScoreNode}
             {scoreRowNode}
             {statsRowNode}
