@@ -69,8 +69,6 @@ export interface ConfettiParticle {
 export interface AppContextType {
   sidebarOpen: boolean;
   toggleSidebar: () => void;
-  closeSidebar: () => void;
   selectedPieceColor: { name: string; value: string; dark: string };
   setSelectedPieceColor: (color: { name: string; value: string; dark: string }) => void;
-}
 }
