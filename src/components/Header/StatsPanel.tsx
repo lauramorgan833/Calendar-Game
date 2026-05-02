@@ -32,14 +32,14 @@ const BRAND_TITLE_CLASS = 'text-3xl font-bold tracking-tight';
 
 // Current score (hero section)
 const CURRENT_SCORE_WRAPPER_CLASS = 'text-center py-4';
-const CURRENT_SCORE_VALUE_CLASS = 'text-5xl font-bold text-[#3d7f92] dark:text-[#5d9caa]';
+const CURRENT_SCORE_VALUE_CLASS = 'text-5xl font-bold text-foreground';
 const CURRENT_SCORE_LABEL_CLASS = 'text-sm text-muted-foreground mt-1';
 const CURRENT_SCORE_NONE_CLASS = 'text-3xl font-bold text-muted-foreground';
 
 // Best/Average row
 const SCORE_ROW_CLASS = 'grid grid-cols-2 gap-3';
 const SCORE_CARD_CLASS = 'p-4 text-center';
-const SCORE_VALUE_CLASS = 'text-xl font-bold text-[#3d7f92] dark:text-[#5d9caa]';
+const SCORE_VALUE_CLASS = 'text-xl font-bold text-foreground';
 const SCORE_LABEL_CLASS = 'text-xs text-muted-foreground';
 
 // Wordle-style stats row
