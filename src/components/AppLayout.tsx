@@ -23,7 +23,7 @@ const CLEAR_DATA_TOAST_DESCRIPTION = 'All game statistics have been reset.';
 const LOADING_CONTAINER_CLASSNAME = 'h-dvh flex items-center justify-center bg-background';
 const LOADING_TEXT_CLASSNAME = 'text-lg text-foreground';
 const APP_CONTAINER_CLASSNAME = 'h-dvh flex flex-col';
-const MAIN_CLASSNAME = 'flex-1 container mx-auto px-2 md:px-4 py-1 md:py-2 overflow-hidden min-h-0 max-w-full mb-safe';
+const MAIN_CLASSNAME = 'flex-1 container mx-auto px-2 md:px-4 py-1 md:py-2 overflow-hidden min-h-0 max-w-full mb-safe bg-background';
 
 // Loading message constant
 const LOADING_MESSAGE = 'Loading...';
@@ -76,7 +76,7 @@ const AppLayout: React.FC = () => {
   const handleCloseSettings = () => setShowSettings(false);
   const handleOpenHelp = () => setShowHelp(true);
   const handleCloseHelp = () => setShowHelp(false);
-  const handleMenuClick = () => {};
+  const handleMenuClick = () => { };
 
   // Show loading state while stats are being loaded from localStorage
   if (isLoading) {

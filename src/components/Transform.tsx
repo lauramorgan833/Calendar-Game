@@ -119,8 +119,8 @@ const PuzzleGameTransforms: React.FC<PuzzleGameTransformsProps> = ({ selectedPie
           size="sm" 
           variant={hasSelectedPiece ? "default" : "ghost"}
           className={hasSelectedPiece 
-            ? "bg-gray-700 hover:bg-gray-800 dark:bg-gray-600 dark:hover:bg-gray-500" 
-            : "bg-gray-300 text-gray-500 cursor-not-allowed dark:bg-gray-800 dark:text-gray-400"
+            ? "bg-[#3d7f92] hover:bg-[#2d5f72] dark:bg-[#5d9caa] dark:hover:bg-[#4a7c87] text-white" 
+            : "bg-muted text-muted-foreground cursor-not-allowed"
           }
           disabled={!hasSelectedPiece}
           onClick={() => hasSelectedPiece && onTransform(selectedPiece, transform)}

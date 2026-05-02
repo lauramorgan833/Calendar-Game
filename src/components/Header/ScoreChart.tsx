@@ -33,8 +33,8 @@ const BUCKET_KEY_100_PLUS = '100+';
 
 // classNames — theme-aware
 const CARD_CLASS = 'p-4';
-const HEADER_WRAPPER_CLASS = 'mb-4';
-const HEADER_TITLE_CLASS = 'font-semibold mb-3 text-foreground';
+const HEADER_WRAPPER_CLASS = 'mb-2';
+const HEADER_TITLE_CLASS = 'font-semibold text-sm text-muted-foreground uppercase tracking-wide';
 const TOGGLE_ROW_CLASS = 'flex gap-2';
 
 const CHART_AREA_CLASS = 'h-40 flex items-end justify-center gap-1 p-2 relative';
@@ -67,7 +67,7 @@ const EMPTY_STATE_CLASS = 'text-sm text-muted-foreground';
 const EMPTY_STATE_TEXT = 'No completed games';
 
 // UI strings
-const CHART_TITLE = 'Winning Scores';
+const CHART_TITLE = 'Score Distribution';
 const TOGGLE_BUCKETS_LABEL = 'Buckets';
 const TOGGLE_TIMELINE_LABEL = 'Timeline';
 const VIEW_MODE_TIMELINE: 'timeline' = 'timeline';
@@ -278,6 +278,7 @@ const ScoreChart: React.FC<ScoreChartProps> = ({
     <Card className={CARD_CLASS}>
       <div className={HEADER_WRAPPER_CLASS}>
         <h3 className={HEADER_TITLE_CLASS}>{CHART_TITLE}</h3>
+        {/* Timeline toggle - commented out but preserved for future use
         <div className={TOGGLE_ROW_CLASS}>
           <Button
             variant={isBucketsView ? 'default' : 'outline'}
@@ -294,6 +295,7 @@ const ScoreChart: React.FC<ScoreChartProps> = ({
             {TOGGLE_TIMELINE_LABEL}
           </Button>
         </div>
+        */}
       </div>
 
       <div className={CHART_AREA_CLASS}>
