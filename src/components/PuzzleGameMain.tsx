@@ -85,13 +85,13 @@ const FOCUS_EVENT = 'focus';
 const ROOT_CLASS = 'h-full flex flex-col max-h-full';
 const HEADER_WRAPPER_CLASS = 'flex-shrink-0 px-1 md:px-4';
 const HEADER_INNER_CLASS = 'w-full flex flex-col items-center';
-const PANEL_CLASS = 'shadow-lg rounded-lg p-2 md:p-3 border';
+const PANEL_CLASS = 'shadow-lg rounded-lg p-2 md:p-4 border mb-1 md:mb-2';
 const MOVES_TITLE_CLASS = 'text-base md:text-xl font-bold text-center';
 const WIN_MESSAGE_CLASS = 'text-green-600 dark:text-green-400 font-bold text-center mt-1 text-base md:text-2xl animate-pulse';
-const RESET_ROW_CLASS = 'flex gap-2';
+const RESET_ROW_CLASS = 'flex gap-2 mb-4 md:mb-6';
 const RESET_BUTTON_CLASS = 'hover:bg-gray-300 dark:hover:bg-gray-700 text-xs md:text-sm !transition-none';
 
-const CONTENT_CLASS = 'flex-1 flex flex-col lg:flex-row p-1 md:p-4 gap-2 md:gap-6 min-h-0 max-h-full overflow-hidden items-start justify-center lg:max-w-5xl lg:mx-auto pt-2 md:pt-4';
+const CONTENT_CLASS = 'flex-1 flex flex-col lg:flex-row p-1 md:p-4 gap-4 md:gap-10 min-h-0 max-h-full overflow-hidden items-start justify-center lg:max-w-5xl lg:mx-auto';
 const GRID_COL_CLASS = 'flex-shrink-0 mb-1 md:mb-0 flex items-start justify-center';
 const GRID_CENTER_CLASS = 'flex items-start justify-center';
 const SHAPES_COL_CLASS = 'flex-1 min-h-0 max-h-full flex items-start justify-center lg:max-w-md';
