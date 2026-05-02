@@ -1,11 +1,11 @@
 import React from 'react';
 import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 // Props interface for the HelpPanel component
@@ -81,10 +81,10 @@ const PRO_TIPS_BULLETS: string[] = [
 // =============================================================================
 // className constants (light + dark variants pre-defined)
 // =============================================================================
-const SHEET_CONTENT_CLASS =
-  'w-full sm:w-[400px] md:w-[540px] max-w-[90vw] p-0 bg-background text-foreground';
-const SHEET_HEADER_CLASS = 'p-4 sm:p-6 pb-0';
-const SCROLL_AREA_CLASS = 'h-[calc(100vh-80px)] px-4 sm:px-6';
+const DIALOG_CONTENT_CLASS =
+  'w-full sm:max-w-[540px] max-h-[85vh] p-0 bg-background text-foreground overflow-hidden';
+const DIALOG_HEADER_CLASS = 'p-4 sm:p-6 pb-2';
+const SCROLL_AREA_CLASS = 'max-h-[calc(85vh-100px)] px-4 sm:px-6 overflow-y-auto';
 const SCROLL_INNER_CLASS = 'space-y-6 pb-6';
 
 // Standard info section card (used by Objective, How to Play, Scoring, Daily)
@@ -209,12 +209,12 @@ const HelpPanel: React.FC<HelpPanelProps> = ({ isOpen, onClose }) => {
   );
 
   return (
-    <Sheet open={isOpen} onOpenChange={onClose}>
-      <SheetContent side="right" className={SHEET_CONTENT_CLASS}>
-        <SheetHeader className={SHEET_HEADER_CLASS}>
-          <SheetTitle>{PANEL_TITLE}</SheetTitle>
-          <SheetDescription>{PANEL_DESCRIPTION}</SheetDescription>
-        </SheetHeader>
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className={DIALOG_CONTENT_CLASS}>
+        <DialogHeader className={DIALOG_HEADER_CLASS}>
+          <DialogTitle>{PANEL_TITLE}</DialogTitle>
+          <DialogDescription>{PANEL_DESCRIPTION}</DialogDescription>
+        </DialogHeader>
 
         <ScrollArea className={SCROLL_AREA_CLASS}>
           <div className={SCROLL_INNER_CLASS}>
@@ -225,8 +225,8 @@ const HelpPanel: React.FC<HelpPanelProps> = ({ isOpen, onClose }) => {
             {proTipsSection}
           </div>
         </ScrollArea>
-      </SheetContent>
-    </Sheet>
+      </DialogContent>
+    </Dialog>
   );
 };
 

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Card } from '@/components/ui/card';
 import { GameStats } from '@/hooks/useGameStats';
@@ -15,16 +15,16 @@ import ScoreChart from './ScoreChart';
 // Module-level constants — no inline strings/numbers in JSX
 // =============================================================================
 
-// Sheet / layout classNames
-const SHEET_CONTENT_CLASS =
-  'w-full sm:w-[400px] max-w-[90vw] p-0 !transition-none bg-background text-foreground';
-const SHEET_HEADER_CLASS = 'p-4 sm:p-6 pb-0';
-const SHEET_TITLE_CLASS = 'flex items-center gap-2';
-const SHEET_TITLE_ICON_CLASS = 'h-5 w-5';
+// Dialog / layout classNames
+const DIALOG_CONTENT_CLASS =
+  'w-full sm:max-w-[440px] max-h-[85vh] p-0 bg-background text-foreground overflow-hidden';
+const DIALOG_HEADER_CLASS = 'p-4 sm:p-6 pb-2';
+const DIALOG_TITLE_CLASS = 'flex items-center gap-2';
+const DIALOG_TITLE_ICON_CLASS = 'h-5 w-5';
 const SCROLL_AREA_CLASS =
-  'h-[calc(100vh-80px)] px-4 sm:px-6 overflow-y-auto';
+  'max-h-[calc(85vh-80px)] px-4 sm:px-6 overflow-y-auto';
 const STATS_WRAPPER_CLASS =
-  'space-y-4 max-h-[calc(100vh-80px)] overflow-y-auto pr-2';
+  'space-y-4 pb-6';
 const STATS_GRID_CLASS = 'grid grid-cols-2 gap-4';
 
 // Stat card classNames (theme-aware: uses Card's bg-card token, with explicit
@@ -102,14 +102,14 @@ const StatsPanel: React.FC<StatsPanelProps> = ({ stats, isOpen, onClose }) => {
   ) : null;
 
   return (
-    <Sheet open={isOpen} onOpenChange={onClose}>
-      <SheetContent side="right" className={SHEET_CONTENT_CLASS}>
-        <SheetHeader className={SHEET_HEADER_CLASS}>
-          <SheetTitle className={SHEET_TITLE_CLASS}>
-            <TrendingUp className={SHEET_TITLE_ICON_CLASS} />
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className={DIALOG_CONTENT_CLASS}>
+        <DialogHeader className={DIALOG_HEADER_CLASS}>
+          <DialogTitle className={DIALOG_TITLE_CLASS}>
+            <TrendingUp className={DIALOG_TITLE_ICON_CLASS} />
             {PANEL_TITLE}
-          </SheetTitle>
-        </SheetHeader>
+          </DialogTitle>
+        </DialogHeader>
 
         <ScrollArea className={SCROLL_AREA_CLASS}>
           <div className={STATS_WRAPPER_CLASS}>
@@ -153,8 +153,8 @@ const StatsPanel: React.FC<StatsPanelProps> = ({ stats, isOpen, onClose }) => {
             {footerNode}
           </div>
         </ScrollArea>
-      </SheetContent>
-    </Sheet>
+      </DialogContent>
+    </Dialog>
   );
 };
 

@@ -1,16 +1,15 @@
 import React from 'react';
 import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Card } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
-import { Trash2, Moon, Sun, Palette } from 'lucide-react';
+import { Moon, Sun, Palette } from 'lucide-react';
 import { useTheme } from '@/contexts/theme-provider';
 import { useAppContext } from '@/contexts/AppContext';
 import { PIECE_COLORS } from '@/lib/colors';
@@ -35,16 +34,16 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose, onClearD
   };
 
   return (
-    <Sheet open={isOpen} onOpenChange={onClose}>
-      <SheetContent side="right" className="w-full sm:w-[400px] max-w-[90vw] p-0 !transition-none">
-        <SheetHeader className="p-4 sm:p-6 pb-0">
-          <SheetTitle>Settings</SheetTitle>
-        </SheetHeader>
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="w-full sm:max-w-[400px] max-h-[85vh] p-0 bg-background text-foreground overflow-hidden">
+        <DialogHeader className="p-4 sm:p-6 pb-2">
+          <DialogTitle>Settings</DialogTitle>
+        </DialogHeader>
         
-        <ScrollArea className="h-[calc(100vh-80px)] px-4 sm:px-6 overflow-y-auto">
+        <ScrollArea className="max-h-[calc(85vh-80px)] px-4 sm:px-6 overflow-y-auto">
           <div className="space-y-6 pb-6">
             {/* Theme settings section */}
-            <Card className="p-6 !transition-none">
+            <Card className="p-6">
               <h3 className="text-lg font-semibold mb-4">Appearance</h3>
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center space-x-2">
@@ -90,12 +89,10 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({ isOpen, onClose, onClearD
                 </p>
               </div>
             </Card>
-            
-
           </div>
         </ScrollArea>
-      </SheetContent>
-    </Sheet>
+      </DialogContent>
+    </Dialog>
   );
 };
 
