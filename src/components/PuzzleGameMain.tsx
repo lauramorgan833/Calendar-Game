@@ -20,6 +20,7 @@ import { SHAPES, ShapeNames, InitialBoard, createShapesCopy } from '@/lib/common
 interface PuzzleGameProps {
   onGameComplete: (score: number) => void;
   onGameStarted: () => void;
+  onStatsRefresh: () => void;
 }
 
 // ============================================================================
@@ -191,7 +192,7 @@ const isInGridBounds = (row: number, col: number): boolean =>
 // Component
 // ============================================================================
 
-const PuzzleGame: React.FC<PuzzleGameProps> = ({ onGameComplete, onGameStarted }) => {
+const PuzzleGame: React.FC<PuzzleGameProps> = ({ onGameComplete, onGameStarted, onStatsRefresh }) => {
   const { selectedPieceColor } = useAppContext();
   const { theme } = useTheme();
   const { hapticFeedback, hideKeyboard } = useCapacitor();
@@ -429,9 +430,18 @@ const PuzzleGame: React.FC<PuzzleGameProps> = ({ onGameComplete, onGameStarted }
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
     const yesterdayStr = yesterday.toISOString().split('T')[0];
+    const today = getTodayDateString();
     const currentStats = getStorageItem(STORAGE_KEYS.GAME_STATS, DEFAULT_STATS_SHAPE);
     const safeStats = buildSafeStats(currentStats);
-    setStorageItem(STORAGE_KEYS.GAME_STATS, { ...safeStats, lastPlayedDate: yesterdayStr });
+    const filteredDaily = safeStats.dailyStats.filter(
+      (d: { date: string }) => d.date !== today
+    );
+    setStorageItem(STORAGE_KEYS.GAME_STATS, {
+      ...safeStats,
+      lastPlayedDate: yesterdayStr,
+      dailyStats: filteredDaily
+    });
+    onStatsRefresh();
     window.dispatchEvent(new Event(FOCUS_EVENT));
   };
 

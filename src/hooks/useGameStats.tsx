@@ -314,11 +314,17 @@ export const useGameStats = () => {
     return dailyStats.filter(daily => daily.date >= cutoffString);
   };
 
+  const refreshStats = () => {
+    const rawStats = getStorageItem(STORAGE_KEYS.GAME_STATS, defaultStats);
+    setStats(sanitizeStats(rawStats));
+  };
+
   return {
     stats,
     isLoading,
     updateStats,
     recordGameStarted,
+    refreshStats,
     clearStats,
     getRecentStats
   };
