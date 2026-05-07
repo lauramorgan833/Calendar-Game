@@ -9,7 +9,7 @@ import { Piece, GameState } from '@/types/interfaces';
 import { isHighlightedCurrentDate, canPlacePiece, calculatePieceCenter, placePiece } from './PuzzleGameLogic';
 import { handleTransform } from './Transform';
 import { checkWinCondition, getTotalAvailableCells, getFilledCells } from './checkWinCondition';
-import { setStorageItem, getStorageItem, STORAGE_KEYS, checkAndResetForNewDay } from '@/lib/localStorage';
+import { setStorageItem, getStorageItem, removeStorageItem, STORAGE_KEYS, checkAndResetForNewDay } from '@/lib/localStorage';
 import { useAppContext } from '@/contexts/AppContext';
 import { useCapacitor } from '@/hooks/useCapacitor';
 import { ImpactStyle } from '@capacitor/haptics';
@@ -77,6 +77,7 @@ const DEFAULT_GAME_STATE: GameState = {
 // UI strings / classNames
 const WIN_MESSAGE = '🎉 YOU WIN! 🎉';
 const RESET_BUTTON_LABEL = 'Reset';
+const SIMULATE_MIDNIGHT_LABEL = 'Simulate Midnight';
 const MOVES_LABEL = 'moves';
 const CALENDAR_GRID_DATA_ATTR = 'data-calendar-grid';
 const CALENDAR_GRID_SELECTOR = `[${CALENDAR_GRID_DATA_ATTR}]`;
@@ -667,6 +668,14 @@ const PuzzleGame: React.FC<PuzzleGameProps> = ({ onGameComplete }) => {
     <div className={WIN_MESSAGE_CLASS}>{WIN_MESSAGE}</div>
   ) : null;
 
+  // Testing only: clears lastPlayedDate so the app behaves as if it's a new day
+  const simulateMidnight = () => {
+    const stats = getStorageItem(STORAGE_KEYS.GAME_STATS, {} as Record<string, unknown>);
+    setStorageItem(STORAGE_KEYS.GAME_STATS, { ...stats, lastPlayedDate: null });
+    removeStorageItem(STORAGE_KEYS.GAME_STATE);
+    window.location.reload();
+  };
+
   const resetControlsNode = showResetControls ? (
     <div className={RESET_ROW_CLASS}>
       <Button
@@ -677,6 +686,14 @@ const PuzzleGame: React.FC<PuzzleGameProps> = ({ onGameComplete }) => {
         onClick={resetGame}
       >
         {RESET_BUTTON_LABEL}
+      </Button>
+      <Button
+        variant="outline"
+        size="sm"
+        className={RESET_BUTTON_CLASS}
+        onClick={simulateMidnight}
+      >
+        {SIMULATE_MIDNIGHT_LABEL}
       </Button>
     </div>
   ) : null;
