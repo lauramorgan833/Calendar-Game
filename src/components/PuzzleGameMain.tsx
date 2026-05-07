@@ -19,6 +19,8 @@ import { SHAPES, ShapeNames, InitialBoard, createShapesCopy } from '@/lib/common
 
 interface PuzzleGameProps {
   onGameComplete: (score: number) => void;
+  onGameStarted: () => void;
+  onStatsRefresh: () => void;
 }
 
 // ============================================================================
@@ -77,6 +79,7 @@ const DEFAULT_GAME_STATE: GameState = {
 // UI strings / classNames
 const WIN_MESSAGE = '🎉 YOU WIN! 🎉';
 const RESET_BUTTON_LABEL = 'Reset';
+const SIMULATE_MIDNIGHT_LABEL = 'Simulate Midnight';
 const MOVES_LABEL = 'moves';
 const CALENDAR_GRID_DATA_ATTR = 'data-calendar-grid';
 const CALENDAR_GRID_SELECTOR = `[${CALENDAR_GRID_DATA_ATTR}]`;
@@ -189,7 +192,7 @@ const isInGridBounds = (row: number, col: number): boolean =>
 // Component
 // ============================================================================
 
-const PuzzleGame: React.FC<PuzzleGameProps> = ({ onGameComplete }) => {
+const PuzzleGame: React.FC<PuzzleGameProps> = ({ onGameComplete, onGameStarted, onStatsRefresh }) => {
   const { selectedPieceColor } = useAppContext();
   const { theme } = useTheme();
   const { hapticFeedback, hideKeyboard } = useCapacitor();
@@ -299,6 +302,8 @@ const PuzzleGame: React.FC<PuzzleGameProps> = ({ onGameComplete }) => {
       const { wasReset } = checkAndResetForNewDay();
       if (wasReset) {
         // Date changed, reset game state for new day
+        setGrid(buildEmptyGrid());
+        setMoves(0);
         setPlacedPieces([]);
         setPieceShapes(new Map());
         setSelectedPiece(null);
@@ -361,6 +366,12 @@ const PuzzleGame: React.FC<PuzzleGameProps> = ({ onGameComplete }) => {
   }, [selectedPieceColor, pieces.length]);
 
   useEffect(() => {
+    if (moves === 1) {
+      onGameStarted();
+    }
+  }, [moves]);
+
+  useEffect(() => {
     if (pieces.length > 0) saveGameState();
   }, [grid, pieces, moves, placedPieces, pieceShapes, pieceColors, gameWon]);
 
@@ -413,6 +424,25 @@ const PuzzleGame: React.FC<PuzzleGameProps> = ({ onGameComplete }) => {
     setPieceShapes(new Map());
     setSelectedPiece(null);
     setGameWon(false);
+  };
+
+  const simulateMidnight = () => {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayStr = yesterday.toISOString().split('T')[0];
+    const today = getTodayDateString();
+    const currentStats = getStorageItem(STORAGE_KEYS.GAME_STATS, DEFAULT_STATS_SHAPE);
+    const safeStats = buildSafeStats(currentStats);
+    const filteredDaily = safeStats.dailyStats.filter(
+      (d: { date: string }) => d.date !== today
+    );
+    setStorageItem(STORAGE_KEYS.GAME_STATS, {
+      ...safeStats,
+      lastPlayedDate: yesterdayStr,
+      dailyStats: filteredDaily
+    });
+    onStatsRefresh();
+    window.dispatchEvent(new Event(FOCUS_EVENT));
   };
 
   const handleHint = async () => {
@@ -677,6 +707,15 @@ const PuzzleGame: React.FC<PuzzleGameProps> = ({ onGameComplete }) => {
         onClick={resetGame}
       >
         {RESET_BUTTON_LABEL}
+      </Button>
+      <Button
+        variant="outline"
+        size="sm"
+        style={resetButtonStyle}
+        className={RESET_BUTTON_CLASS}
+        onClick={simulateMidnight}
+      >
+        {SIMULATE_MIDNIGHT_LABEL}
       </Button>
     </div>
   ) : null;

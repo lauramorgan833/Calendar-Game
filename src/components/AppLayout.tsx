@@ -40,7 +40,7 @@ const AppLayout: React.FC = () => {
   const { theme } = useTheme();
 
   // Game statistics hook for tracking user progress with localStorage
-  const { stats, updateStats, clearStats, isLoading } = useGameStats();
+  const { stats, updateStats, recordGameStarted, refreshStats, clearStats, isLoading } = useGameStats();
 
   // Modal visibility states
   const [showStats, setShowStats] = useState(false);
@@ -106,7 +106,7 @@ const AppLayout: React.FC = () => {
 
       {/* Main game content area - uses remaining viewport height with safe area padding */}
       <main className={MAIN_CLASSNAME}>
-        <PuzzleGameMain onGameComplete={handleGameComplete} />
+        <PuzzleGameMain onGameComplete={handleGameComplete} onGameStarted={recordGameStarted} onStatsRefresh={refreshStats} />
       </main>
 
       {/* Modal panels for stats, settings, and help */}
