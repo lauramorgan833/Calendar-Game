@@ -300,6 +300,8 @@ const PuzzleGame: React.FC<PuzzleGameProps> = ({ onGameComplete }) => {
       const { wasReset } = checkAndResetForNewDay();
       if (wasReset) {
         // Date changed, reset game state for new day
+        setGrid(buildEmptyGrid());
+        setMoves(0);
         setPlacedPieces([]);
         setPieceShapes(new Map());
         setSelectedPiece(null);
