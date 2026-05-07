@@ -206,68 +206,75 @@ export const useGameStats = () => {
 
 
   /**
-   * Updates statistics after a game is completed
+   * Records that the player has started today's game (first piece placed).
+   * Increments gamesPlayed and currentStreak. Only runs once per day.
+   */
+  const recordGameStarted = () => {
+    const today = new Date().toISOString().split('T')[0];
+    const dailyStats = Array.isArray(stats.dailyStats) ? stats.dailyStats : [];
+
+    const alreadyStartedToday = dailyStats.some(d => d.date === today);
+    if (alreadyStartedToday) return;
+
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayString = yesterday.toISOString().split('T')[0];
+    const playedYesterday = dailyStats.some(d => d.date === yesterdayString);
+
+    const newCurrentStreak = playedYesterday ? stats.currentStreak + 1 : 1;
+
+    const dailyEntry: DailyStats = {
+      date: today,
+      score: 0,
+      completed: false,
+      timeSpent: 0
+    };
+
+    const newStats: GameStats = {
+      ...stats,
+      gamesPlayed: stats.gamesPlayed + 1,
+      currentStreak: newCurrentStreak,
+      maxStreak: Math.max(stats.maxStreak, newCurrentStreak),
+      lastPlayedDate: today,
+      dailyStats: [...dailyStats, dailyEntry]
+    };
+
+    newStats.winPercentage = newStats.gamesPlayed > 0
+      ? Math.round((newStats.gamesWon / newStats.gamesPlayed) * 100)
+      : 0;
+
+    setStats(newStats);
+    setStorageItem(STORAGE_KEYS.GAME_STATS, newStats);
+    void pushToCloud(userIdRef.current, newStats);
+  };
+
+  /**
+   * Updates statistics after a game is completed (won).
+   * Records the final score in today's dailyStats entry.
    *
    * @param won - Whether the player won the game
    * @param score - Number of moves taken (lower is better)
    */
   const updateStats = (won: boolean, score: number) => {
-    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
-
-    // Defensive: ensure dailyStats is always an array
+    const today = new Date().toISOString().split('T')[0];
     const dailyStats = Array.isArray(stats.dailyStats) ? stats.dailyStats : [];
 
-    // Only block if we've ALREADY recorded a completed game for today.
-    // We check the dailyStats array (the source of truth for "did a game finish today")
-    // instead of `lastPlayedDate`, because `lastPlayedDate` gets set on app open
-    // before any game is actually completed.
-    const alreadyRecordedToday = dailyStats.some(d => d.date === today);
-    if (alreadyRecordedToday) {
-      return;
-    }
+    const todayEntry = dailyStats.find(d => d.date === today);
+    if (todayEntry?.completed) return;
 
-    // Check if yesterday was played and won (for streak calculation)
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    const yesterdayString = yesterday.toISOString().split('T')[0];
+    const updatedDailyStats = todayEntry
+      ? dailyStats.map(d => d.date === today
+          ? { ...d, score, completed: won }
+          : d)
+      : [...dailyStats, { date: today, score, completed: won, timeSpent: 0 }];
 
-    const yesterdayStats = dailyStats.find(daily => daily.date === yesterdayString);
-    const playedYesterday = yesterdayStats !== undefined;
-    const wonYesterday = yesterdayStats?.completed || false;
-
-    // Calculate new streak based on consecutive daily wins
-    let newCurrentStreak = 0;
-    if (won) {
-      if (stats.currentStreak === 0) {
-        newCurrentStreak = 1;
-      } else if (playedYesterday && wonYesterday) {
-        newCurrentStreak = stats.currentStreak + 1;
-      } else {
-        newCurrentStreak = 1;
-      }
-    } else {
-      newCurrentStreak = 0;
-    }
-
-    // Create daily stats entry
-    const dailyEntry: DailyStats = {
-      date: today,
-      score,
-      completed: won,
-      timeSpent: 0
-    };
-
-    // Calculate new statistics
     const newStats: GameStats = {
       ...stats,
-      gamesPlayed: stats.gamesPlayed + 1,
       gamesWon: won ? stats.gamesWon + 1 : stats.gamesWon,
       totalScore: won ? stats.totalScore + score : stats.totalScore,
       lastPlayedDate: today,
-      currentStreak: newCurrentStreak,
-      maxStreak: Math.max(stats.maxStreak, newCurrentStreak),
       bestScore: won ? (stats.bestScore === 0 ? score : Math.min(stats.bestScore, score)) : stats.bestScore,
-      dailyStats: [...dailyStats, dailyEntry]
+      dailyStats: updatedDailyStats
     };
 
     newStats.averageScore = newStats.gamesWon > 0
@@ -278,11 +285,8 @@ export const useGameStats = () => {
       ? Math.round((newStats.gamesWon / newStats.gamesPlayed) * 100)
       : 0;
 
-    // Update state and persist locally
     setStats(newStats);
     setStorageItem(STORAGE_KEYS.GAME_STATS, newStats);
-
-    // Fire-and-forget cloud sync
     void pushToCloud(userIdRef.current, newStats);
   };
 
@@ -314,6 +318,7 @@ export const useGameStats = () => {
     stats,
     isLoading,
     updateStats,
+    recordGameStarted,
     clearStats,
     getRecentStats
   };

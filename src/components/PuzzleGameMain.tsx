@@ -19,6 +19,7 @@ import { SHAPES, ShapeNames, InitialBoard, createShapesCopy } from '@/lib/common
 
 interface PuzzleGameProps {
   onGameComplete: (score: number) => void;
+  onGameStarted: () => void;
 }
 
 // ============================================================================
@@ -190,7 +191,7 @@ const isInGridBounds = (row: number, col: number): boolean =>
 // Component
 // ============================================================================
 
-const PuzzleGame: React.FC<PuzzleGameProps> = ({ onGameComplete }) => {
+const PuzzleGame: React.FC<PuzzleGameProps> = ({ onGameComplete, onGameStarted }) => {
   const { selectedPieceColor } = useAppContext();
   const { theme } = useTheme();
   const { hapticFeedback, hideKeyboard } = useCapacitor();
@@ -362,6 +363,12 @@ const PuzzleGame: React.FC<PuzzleGameProps> = ({ onGameComplete }) => {
     pieces.forEach(piece => newColorMap.set(piece.id, selectedPieceColor.value));
     setPieceColors(newColorMap);
   }, [selectedPieceColor, pieces.length]);
+
+  useEffect(() => {
+    if (moves === 1) {
+      onGameStarted();
+    }
+  }, [moves]);
 
   useEffect(() => {
     if (pieces.length > 0) saveGameState();
