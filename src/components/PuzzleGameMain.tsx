@@ -77,6 +77,7 @@ const DEFAULT_GAME_STATE: GameState = {
 // UI strings / classNames
 const WIN_MESSAGE = '🎉 YOU WIN! 🎉';
 const RESET_BUTTON_LABEL = 'Reset';
+const SIMULATE_MIDNIGHT_LABEL = 'Simulate Midnight';
 const MOVES_LABEL = 'moves';
 const CALENDAR_GRID_DATA_ATTR = 'data-calendar-grid';
 const CALENDAR_GRID_SELECTOR = `[${CALENDAR_GRID_DATA_ATTR}]`;
@@ -415,6 +416,16 @@ const PuzzleGame: React.FC<PuzzleGameProps> = ({ onGameComplete }) => {
     setGameWon(false);
   };
 
+  const simulateMidnight = () => {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayStr = yesterday.toISOString().split('T')[0];
+    const currentStats = getStorageItem(STORAGE_KEYS.GAME_STATS, DEFAULT_STATS_SHAPE);
+    const safeStats = buildSafeStats(currentStats);
+    setStorageItem(STORAGE_KEYS.GAME_STATS, { ...safeStats, lastPlayedDate: yesterdayStr });
+    window.dispatchEvent(new Event(FOCUS_EVENT));
+  };
+
   const handleHint = async () => {
     await hapticFeedback(ImpactStyle.Light);
   };
@@ -677,6 +688,15 @@ const PuzzleGame: React.FC<PuzzleGameProps> = ({ onGameComplete }) => {
         onClick={resetGame}
       >
         {RESET_BUTTON_LABEL}
+      </Button>
+      <Button
+        variant="outline"
+        size="sm"
+        style={resetButtonStyle}
+        className={RESET_BUTTON_CLASS}
+        onClick={simulateMidnight}
+      >
+        {SIMULATE_MIDNIGHT_LABEL}
       </Button>
     </div>
   ) : null;
